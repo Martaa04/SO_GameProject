@@ -1,0 +1,9 @@
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\bin\Debug\SO_Game.exe.config
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\bin\Debug\SO_Game.exe
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\bin\Debug\SO_Game.pdb
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.AssemblyReference.cache
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.Main.resources
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.GenerateResource.cache
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.CoreCompileInputs.cache
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.exe
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.pdb
