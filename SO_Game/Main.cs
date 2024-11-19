@@ -48,7 +48,7 @@ namespace SO_Game
         private void connect_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 50158);
+            IPEndPoint ipep = new IPEndPoint(direc, 50168);
 
 
             //We create the socket
@@ -119,18 +119,12 @@ namespace SO_Game
         {
             while (true)
             {
+                //Recibimos mensaje del servidor
                 byte[] msg2 = new byte[80];
                 server.Receive(msg2);
-                int receivedbytes = server.Receive(msg2);
-                if (receivedbytes == 0)
-                {
-                    Console.WriteLine("No data received."); //Making sure the message is not empty;
-                    return;
-                }
-                string message = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                string[] trozos = message.Split('/');
+                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
                 string codigo = (trozos[0]);
-                string mensaje = trozos[1];
+                string mensaje = Encoding.ASCII.GetString(msg2).Split('/')[1];
 
                 switch (codigo)
                 {
