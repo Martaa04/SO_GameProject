@@ -50,6 +50,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.label_users_connected = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -258,11 +259,22 @@
             this.label_users_connected.TabIndex = 21;
             this.label_users_connected.Text = "0";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(868, 333);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(153, 23);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Show Connected";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_users_connected);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataGridView1);
@@ -319,5 +331,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label_users_connected;
+        private System.Windows.Forms.Button button1;
     }
 }
