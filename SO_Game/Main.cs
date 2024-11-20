@@ -238,9 +238,10 @@ namespace SO_Game
                 //Recibimos mensaje del servidor
                 byte[] msg2 = new byte[512];
                 server.Receive(msg2);
-                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
+                string message = Encoding.ASCII.GetString(msg2).Split('\0')[0];
+                string[] trozos = message.Split('/');
                 string codigo = (trozos[0]);
-                string mensaje = Encoding.ASCII.GetString(msg2).Split('/')[1];
+                string mensaje = trozos[1].Split('\0')[0];
 
                 switch (codigo)
                 {
