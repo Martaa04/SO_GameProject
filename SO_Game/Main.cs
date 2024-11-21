@@ -107,6 +107,7 @@ namespace SO_Game
                     byte[] answer = new byte[1024];
                     server.Receive(answer);
 
+
                     switch (Encoding.ASCII.GetString(answer))
                     {
                         case "0":
@@ -153,44 +154,42 @@ namespace SO_Game
         {
             try
             {
-                string message = ""; // Prepare the message to send to the server
+                string message = " "; // Prepare the message to send to the server
+              
 
                 if (PlayerGame.Checked)
                 {
                     message = "3/";
                     // Enviamos al servidor el nombre tecleado
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
-                    server.Send(msg);
+                    byte[] msg1 = System.Text.Encoding.ASCII.GetBytes(message);
+                    server.Send(msg1);
 
-                    byte[] msg2 = new byte[512];
-                    server.Receive(msg2);
-                    string mensaje = Encoding.ASCII.GetString(msg2);
-
-                    string formattedMessage = mensaje.Replace(",", "\n");
-                    MessageBox.Show(formattedMessage);
-
+                    byte[] response1 = new byte[1024];
+                    server.Receive(response1);
+                    string messaje1 = Encoding.ASCII.GetString(response1).Trim('\0');
+                    MessageBox.Show(messaje1);
                 }
                 else if (winner.Checked)
                 {
                     message = "4/" + gameid.Text; // The code for fetching the winner by game ID
                                                   // Enviamos al servidor el nombre tecleado
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
-                    server.Send(msg);
-                    byte[] msg2 = new byte[512];
-                    server.Receive(msg2);
-                    string mensaje = Encoding.ASCII.GetString(msg2);
-                    MessageBox.Show(mensaje);
-                }
+                    byte[] msg2 = Encoding.ASCII.GetBytes(message);
+                    server.Send(msg2);
+                    byte[] response2 = new byte[512];
+                    server.Receive(response2);
+                    string mensaje2 = Encoding.ASCII.GetString(response2);
+                    MessageBox.Show(mensaje2);
+                } 
                 else if (gamesPlayed.Checked)  // New case for Games Played by a Player
                 {
                     message = "6/" + playerName.Text; // "6" represents the new query
                                                       // Enviamos al servidor el nombre tecleado                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
-                    server.Send(msg);
-                    byte[] msg2 = new byte[512];
-                    server.Receive(msg2);
-                    string mensaje = Encoding.ASCII.GetString(msg2);
-                    MessageBox.Show(message);
+                    byte[] msg3 = System.Text.Encoding.ASCII.GetBytes(message);
+                    server.Send(msg3);
+                    byte[] response3 = new byte[512];
+                    server.Receive(response3);
+                    string mensaje3 = Encoding.ASCII.GetString(response3);
+                    MessageBox.Show(mensaje3);
                 }
             }
             catch (SocketException ex)
