@@ -48,7 +48,7 @@ namespace SO_Game
         private void connect_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 50182);
+            IPEndPoint ipep = new IPEndPoint(direc, 50185);
 
 
             //We create the socket
@@ -103,44 +103,6 @@ namespace SO_Game
                 {
                     byte[] register = System.Text.Encoding.ASCII.GetBytes("1/" + email.Text + "/" + Username_TextBox.Text + "/" + password_TextBox.Text);
                     server.Send(register);
-
-                    byte[] answer = new byte[1024];
-                    server.Receive(answer);
-
-
-                    switch (Encoding.ASCII.GetString(answer))
-                    {
-                        case "0":
-
-                            MessageBox.Show("The email is already registered. Use another one.");
-
-                            break;
-
-                        case "1":
-                            MessageBox.Show("This username already exists. Please, choose another one.");
-                            break;
-
-                        case "2":
-                            MessageBox.Show("The email must have between 15 and 80 characters.");
-                            break;
-
-                        case "3":
-                            MessageBox.Show("Your username must have between 3 and 80 characters.");
-                            break;
-
-                        case "4":
-                            MessageBox.Show("Your passwrd must have between 8 and 20 characters");
-                            break;
-
-                        case "5":
-                            MessageBox.Show("Register was unsuccessful. Please, try again.");
-                            break;
-
-                        case "6":
-                            MessageBox.Show("New user registered successfully!");
-                            this.Hide();
-                            break;
-                    }
                 }
             }
 
@@ -164,10 +126,6 @@ namespace SO_Game
                     byte[] msg1 = System.Text.Encoding.ASCII.GetBytes(message);
                     server.Send(msg1);
 
-                    byte[] response1 = new byte[1024];
-                    server.Receive(response1);
-                    string messaje1 = Encoding.ASCII.GetString(response1).Trim('\0');
-                    MessageBox.Show(messaje1);
                 }
                 else if (winner.Checked)
                 {
@@ -175,10 +133,6 @@ namespace SO_Game
                                                   // Enviamos al servidor el nombre tecleado
                     byte[] msg2 = Encoding.ASCII.GetBytes(message);
                     server.Send(msg2);
-                    byte[] response2 = new byte[512];
-                    server.Receive(response2);
-                    string mensaje2 = Encoding.ASCII.GetString(response2);
-                    MessageBox.Show(mensaje2);
                 } 
                 else if (gamesPlayed.Checked)  // New case for Games Played by a Player
                 {
@@ -186,10 +140,7 @@ namespace SO_Game
                                                       // Enviamos al servidor el nombre tecleado                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
                     byte[] msg3 = System.Text.Encoding.ASCII.GetBytes(message);
                     server.Send(msg3);
-                    byte[] response3 = new byte[512];
-                    server.Receive(response3);
-                    string mensaje3 = Encoding.ASCII.GetString(response3);
-                    MessageBox.Show(mensaje3);
+
                 }
             }
             catch (SocketException ex)
@@ -239,7 +190,7 @@ namespace SO_Game
                 server.Receive(msg2);
                 string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
                 string codigo = (trozos[0]);
-                string mensaje = Encoding.ASCII.GetString(msg2).Split('/')[1];
+                string mensaje = trozos[1];
 
                 switch (codigo)
                 {
@@ -310,7 +261,6 @@ namespace SO_Game
 
                             case "6":
                                 MessageBox.Show("New user registered successfully!");
-                                this.Hide();
                                 break;
                         }
                         break;
