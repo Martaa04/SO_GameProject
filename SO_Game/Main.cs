@@ -48,7 +48,7 @@ namespace SO_Game
         private void connect_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 50185);
+            IPEndPoint ipep = new IPEndPoint(direc, 50186);
 
 
             //We create the socket
@@ -155,143 +155,144 @@ namespace SO_Game
             string mensaje = "5/";
             byte[] msg = Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
-
-            byte[] msg2 = new byte[1024];
-            server.Receive(msg2);
-            string message = Encoding.ASCII.GetString(msg2);
-            int m = Convert.ToInt32(message.Split(',')[0]);
-
-            label_users_connected.Text = "Users connected:";
-            label_users_connected.Text = label_users_connected.Text + " " + Convert.ToString(m);
-
-            dataGridView1.Rows.Clear();
-            dataGridView1.Columns.Clear(); // Clear columns first
-            dataGridView1.Columns.Add("PlayerName", "Connected Players");
-
-
-            string name;
-
-            for (int i = 0; i < m; i++)
-            {
-                name = Convert.ToString(Encoding.ASCII.GetString(msg2).Split(',')[i]);
-
-
-                dataGridView1.Rows.Add(name);
-
-            }
         }
 
         private void AtenderServidor() //receive ALL the messages from the server!!
         {
-            while (true)
+            try
             {
-                //Recibimos mensaje del servidor
-                byte[] msg2 = new byte[512];
-                server.Receive(msg2);
-                string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
-                string codigo = (trozos[0]);
-                string mensaje = trozos[1];
-
-                switch (codigo)
+                while (true)
                 {
-                    case "1":
-                        string formattedMessage = mensaje.Replace(",", "\n");
-                        MessageBox.Show(formattedMessage);
-                        break;
+                    Console.WriteLine("I am executing this while");
+                    //Recibimos mensaje del servidor
+                    byte[] msg2 = new byte[1024];
+                    server.Receive(msg2);
+                    string[] trozos = Encoding.ASCII.GetString(msg2).Split('/');
+                    string codigo = (trozos[0]);
+                    string mensaje;
 
-                    case "2":
-                        MessageBox.Show(mensaje);
-                        break;
-                    case "3":
-                        MessageBox.Show(mensaje);
-                        break;
+                    switch (codigo)
+                    {
+                        case "1": //query 1
+                            Console.WriteLine("I am executing query1");
+                            string mess = trozos[1].Split('\0')[0];
+                            string formattedMessage = mess.Replace(",", "\n");
+                            MessageBox.Show(formattedMessage);
+                            break;
 
-                    case "4":
-                        int m = Convert.ToInt32(mensaje.Split(',')[0]);
+                        case "2": //query 2
+                            mensaje = trozos[1].Split('\0')[0];
+                            MessageBox.Show(mensaje);
+                            break;
+                        case "3": //query 3
+                            mensaje = trozos[1].Split('\0')[0];
+                            MessageBox.Show(mensaje);
+                            break;
 
-                        label_users_connected.Text = "Users connected:";
-                        label_users_connected.Text = label_users_connected.Text + " " + Convert.ToString(m);
+                        case "4": //Connected List 
+                            mensaje = trozos[1].Split('\0')[0];
+                            Console.WriteLine("Llamando a ConnectedList...");
+                            try
+                            {
+                                string[] partes = mensaje.Split(',');
+                                string connected = partes[0];
+                                label_users_connected.Text = connected;
 
-                        dataGridView1.Rows.Clear();
-                        dataGridView1.Columns.Clear(); // Clear columns first
-                        dataGridView1.Columns.Add("PlayerName", "Connected Players");
+                                dataGridView1.Rows.Clear();
+                                dataGridView1.Columns.Clear(); // Clear columns first
+                                dataGridView1.Columns.Add("PlayerName", "Connected Players");
+                                for (int i = 1; i < partes.Length; i++)
+                                {
+                                    dataGridView1.Rows.Add(partes[i]);
+                                }
+                            }
+                            catch (SocketException ex)
+                            {
+                                MessageBox.Show("Error connecting to the server: " + ex.Message);
+                            }
+                            break;
+                        case "5":
+                            mensaje = trozos[1].Split('\0')[0];
+                            switch (Convert.ToInt32(mensaje))
+                            {
+                                case 0:
+ 
+                                    MessageBox.Show("The email is already registered. Use another one.");
+
+                                    break;
+
+                                case 1:
+
+                                    MessageBox.Show("This username already exists. Please, choose another one.");
+    
+                                    break;
+
+                                case 2:
+  
+                                    MessageBox.Show("The email must have between 15 and 80 characters.");
+                                    break;
+
+                                case 3:
+
+                                        MessageBox.Show("Your username must have between 3 and 80 characters.");
+                                    
+                                    break;
 
 
-                        string name;
-
-                        for (int i = 0; i < m; i++)
-                        {
-                            name = Convert.ToString(Encoding.ASCII.GetString(msg2).Split(',')[i]);
+                                case 4:
+                                    MessageBox.Show("Your passwrd must have between 8 and 20 characters");
+                                    break;
 
 
-                            dataGridView1.Rows.Add(name);
+                                case 5:
+                                    MessageBox.Show("Register was unsuccessful. Please, try again.");
+                                    break;
 
-                        }
+                                case 6:
+                                    MessageBox.Show("New user registered successfully!");
+                                    break;
+                            }
+                            break;
 
-                        break;
+                        case "6": //Login
+                            mensaje = trozos[1].Split('\0')[0];
+                            int code = Convert.ToInt32(mensaje);
+                            switch (code)
+                            {
+                                case 0:
+                                    MessageBox.Show("The userame does not exist.");
+                                    break;
+                                case 1:
+                                    MessageBox.Show("The data was not found in the database");
+                                    break;
 
-                    case "5":
-                        switch (mensaje)
-                        {
-                            case "0":
+                                case 2:
+                                    MessageBox.Show("Login error. Please, try again.");
+                                    break;
 
-                                MessageBox.Show("The email is already registered. Use another one.");
-
-                                break;
-
-                            case "1":
-                                MessageBox.Show("This username already exists. Please, choose another one.");
-                                break;
-
-                            case "2":
-                                MessageBox.Show("The email must have between 15 and 80 characters.");
-                                break;
-
-                            case "3":
-                                MessageBox.Show("Your username must have between 3 and 80 characters.");
-                                break;
-
-                            case "4":
-                                MessageBox.Show("Your passwrd must have between 8 and 20 characters");
-                                break;
-
-                            case "5":
-                                MessageBox.Show("Register was unsuccessful. Please, try again.");
-                                break;
-
-                            case "6":
-                                MessageBox.Show("New user registered successfully!");
-                                break;
-                        }
-                        break;
-
-                    case "6":
-                        switch (Convert.ToInt32(mensaje))
-                        {
-                            case 0:
-
-                                MessageBox.Show("The userame does not exist.");
-                                break;
-
-                            case 1:
-                                MessageBox.Show("Login error. Please, try again.");
-                                break;
-
-                            case 2:
-                                MessageBox.Show("The password is not correct.");
-                                break;
-
-                            case 3:
-
-                                MessageBox.Show("Login successful");
-                                break;
-                            default:
-                                MessageBox.Show(Convert.ToString(mensaje));
-                                break;
-                        }
-                        break;
+                                case 3:
+                                    MessageBox.Show("Login successful");        
+                                    break;
+                                case 4:
+                                    MessageBox.Show("The password is not correct.");
+                                    break;
+                                default:
+                                    MessageBox.Show(Convert.ToString(mensaje));
+                                    break;
+                            }
+                            break;
+                    }
 
                 }
+            }
+
+            catch (SocketException ex)
+            {
+                MessageBox.Show($"Socket error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}");
             }
         }
 
