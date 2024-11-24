@@ -7,3 +7,12 @@ C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.
 C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.CoreCompileInputs.cache
 C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.exe
 C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.pdb
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\bin\Debug\SO_Game.exe.config
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\bin\Debug\SO_Game.exe
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\bin\Debug\SO_Game.pdb
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.AssemblyReference.cache
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.Main.resources
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.GenerateResource.cache
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.CoreCompileInputs.cache
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.exe
+C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.pdb

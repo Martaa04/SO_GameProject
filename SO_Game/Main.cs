@@ -47,8 +47,8 @@ namespace SO_Game
 
         private void connect_Click(object sender, EventArgs e)
         {
-            IPAddress direc = IPAddress.Parse("192.168.56.102");
-            IPEndPoint ipep = new IPEndPoint(direc, 50187);
+            IPAddress direc = IPAddress.Parse("192.168.56.101");
+            IPEndPoint ipep = new IPEndPoint(direc, 50170);
 
 
             //We create the socket
@@ -124,7 +124,16 @@ namespace SO_Game
                     message = "3/";
                     // Enviamos al servidor el nombre tecleado
                     byte[] msg1 = System.Text.Encoding.ASCII.GetBytes(message);
-                    server.Send(msg1);
+                    //server.Send(msg1);
+
+                    if (server != null && server.Connected)
+                    {
+                        server.Send(msg1);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Socket is not connected.");
+                    }
 
                 }
                 else if (winner.Checked)
