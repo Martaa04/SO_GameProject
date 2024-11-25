@@ -48,7 +48,7 @@ namespace SO_Game
         private void connect_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.101");
-            IPEndPoint ipep = new IPEndPoint(direc, 50170);
+            IPEndPoint ipep = new IPEndPoint(direc, 50175);
 
 
             //We create the socket
@@ -77,6 +77,9 @@ namespace SO_Game
 
         private void disconnect_Click(object sender, EventArgs e)
         {
+            //string mensaje = "0/";
+            //byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            //server.Send(msg);
             server.Shutdown(SocketShutdown.Both);
             server.Close();
             atender.Abort();
@@ -204,16 +207,18 @@ namespace SO_Game
                             try
                             {
                                 string[] partes = mensaje.Split(',');
+                                //string messi = partes[partes.Length].Split('\0')[0];
                                 string connected = partes[0];
                                 label_users_connected.Text = connected;
-
+                                //MessageBox.Show(mensaje);
                                 dataGridView1.Rows.Clear();
-                                dataGridView1.Columns.Clear(); // Clear columns first
-                                dataGridView1.Columns.Add("PlayerName", "Connected Players");
+                                //dataGridView1.Columns.Clear(); // Clear columns first
+                                //dataGridView1.Rows.Add("Connected Players");
                                 for (int i = 1; i < partes.Length; i++)
                                 {
                                     dataGridView1.Rows.Add(partes[i]);
                                 }
+                                break;
                             }
                             catch (SocketException ex)
                             {
