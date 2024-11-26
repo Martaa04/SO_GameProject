@@ -19,6 +19,7 @@ namespace SO_Game
     {
         Socket server;
         Thread atender;
+        string myname;
         public Main()
         {
             InitializeComponent();
@@ -37,7 +38,31 @@ namespace SO_Game
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int RowSelection = e.RowIndex;
+            if (RowSelection >= 0)
+            {
+                string name = dataGridView1[0, RowSelection].Value.ToString();
+                if (name == myname)
+                {
+                    MessageBox.Show("You can't invite yourself.");
+                }
+                else
+                {
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to invite" + " " + dataGridView1[0, RowSelection].Value.ToString(), "You're about to invite this person", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        MessageBox.Show("You have invited" + " " + dataGridView1[0, RowSelection].Value.ToString());
+                        string message = "7/" + myname + "/"+ name;
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
+                        server.Send(msg);
+                    }
+                }
+            }
 
+            else
+            {
+                MessageBox.Show("You must select a valid row.");
+            }
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -47,8 +72,8 @@ namespace SO_Game
 
         private void connect_Click(object sender, EventArgs e)
         {
-            IPAddress direc = IPAddress.Parse("192.168.56.101");
-            IPEndPoint ipep = new IPEndPoint(direc, 50175);
+            IPAddress direc = IPAddress.Parse("192.168.56.102");
+            IPEndPoint ipep = new IPEndPoint(direc, 50195);
 
 
             //We create the socket
@@ -269,7 +294,7 @@ namespace SO_Game
                             break;
 
                         case "6": //Login
-                            mensaje = trozos[1].Split('\0')[0];
+                            mensaje = trozos[1];
                             int code = Convert.ToInt32(mensaje);
                             switch (code)
                             {
@@ -285,14 +310,52 @@ namespace SO_Game
                                     break;
 
                                 case 3:
-                                    MessageBox.Show("Login successful");        
+                                    MessageBox.Show("Login successful");
+                                    myname = trozos[2];
                                     break;
                                 case 4:
                                     MessageBox.Show("The password is not correct.");
                                     break;
+                                case 5:
+                                    MessageBox.Show("You are already logged in.");                                    
+                                    break;
                                 default:
                                     MessageBox.Show(Convert.ToString(mensaje));
                                     break;
+                            }
+                            break;
+                        case "7": //invitaion
+                            string invites = trozos[1];
+                            string message= trozos[2];
+                            DialogResult dialogResult = MessageBox.Show(message, "You're about to accept this game", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                string accepted = "8/" + invites + "/"+ "1/";
+                                byte[] msg = System.Text.Encoding.ASCII.GetBytes(accepted);
+                                server.Send(msg);
+                                Interface game = new Interface(server);
+                                game.ShowDialog();
+                                
+                            }
+                            else 
+                            {
+                                string accepted = "8/" + invites+ "/" + "0";
+                                byte[] msg = System.Text.Encoding.ASCII.GetBytes(accepted);
+                                server.Send(msg);
+                            }
+                            break;
+                        case "8":
+                            int aceptado = Convert.ToInt32(trozos[1]);
+                            string invitation = trozos[2];
+                            if (aceptado == 0)
+                            {
+                                MessageBox.Show(invitation);
+                                Interface juego= new Interface(server);
+                                juego.ShowDialog();
+                            }
+                            else
+                            {
+                                MessageBox.Show(invitation);
                             }
                             break;
                     }

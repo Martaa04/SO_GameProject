@@ -16,3 +16,4 @@ C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game
 C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.csproj.CoreCompileInputs.cache
 C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.exe
 C:\Users\Karolina\source\repos\Martaa04\SO_GameProject\SO_Game\obj\Debug\SO_Game.pdb
+C:\Users\marta\Documents\GitHub\SO_GameProject\SO_Game\obj\Debug\SO_Game.Interface.resources
