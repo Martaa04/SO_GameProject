@@ -48,7 +48,7 @@ namespace SO_Game
         private void connect_Click(object sender, EventArgs e)
         {
             IPAddress direc = IPAddress.Parse("192.168.56.101");
-            IPEndPoint ipep = new IPEndPoint(direc, 50175);
+            IPEndPoint ipep = new IPEndPoint(direc, 50173);
 
 
             //We create the socket
@@ -77,9 +77,9 @@ namespace SO_Game
 
         private void disconnect_Click(object sender, EventArgs e)
         {
-            //string mensaje = "0/";
-            //byte[] msg = Encoding.ASCII.GetBytes(mensaje);
-            //server.Send(msg);
+            string mensaje = "0/";
+            byte[] msg = Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
             server.Shutdown(SocketShutdown.Both);
             server.Close();
             atender.Abort();
