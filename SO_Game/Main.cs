@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using SO_Game;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using SOProject;
 
 namespace SO_Game
 {
@@ -372,6 +373,11 @@ namespace SO_Game
                 MessageBox.Show($"Unexpected error: {ex.Message}");
             }
         }
-
+    
+        private void button2_Click(object sender, EventArgs e)
+        {
+            NewGame ng = new NewGame(server);
+            ng.ShowDialog();
+        }
     }
 }
